@@ -80,7 +80,7 @@ class FaceSamplerFrame(wx.Frame):
         self.mouth_coords = None
         #self.refresh_img()
         
-        self.typelist = ['Happy', 'Calm', 'Surprised', 'Sad']
+        self.typelist = ['Sad', 'Smiling', 'Calm', 'Astonished']
         self.typebox = wx.RadioBox(self, label='Select the type of face this image represents',pos=(405,490),choices=self.typelist,majorDimension=2)
         
         self.l_eye_b = wx.Button(self,label='Left Eye',pos=(5,490))
