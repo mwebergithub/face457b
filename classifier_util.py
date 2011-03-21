@@ -13,6 +13,7 @@ class Emotion:
   CALM = 2
   ASTONISHED = 3
   to_s = {
+    -1: "CLASSIFICATION ERROR",
     0: "sad",
     1: "smiling",
     2: "calm",
@@ -42,12 +43,12 @@ class RandomFaceGen:
   def genGaussClusteredInputSet(cls, size=10):
 
     means = [
-      tuple([10]*IMG_SIZE), 
-      tuple([70]*IMG_SIZE), 
-      tuple([130]*IMG_SIZE),
+      tuple([50]*IMG_SIZE), 
+      tuple([100]*IMG_SIZE), 
+      tuple([150]*IMG_SIZE),
       tuple([200]*IMG_SIZE)
     ]
-    cov = diag([1]*IMG_SIZE)
+    cov = diag([20]*IMG_SIZE)
     inputData = []
     for i in range(size):
       emo = i % 4

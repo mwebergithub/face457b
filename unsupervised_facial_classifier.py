@@ -12,7 +12,6 @@ class UnsupervisedFacialClassifier:
   def __init__(self, nNeurons, mNeurons):
     # KohonenMap of IMG_SIZE dimensions and a 2x2 grid. (try 4x1 later)
     self.som = KohonenMap(IMG_SIZE, nNeurons, mNeurons);
-    #self.som.neighbourdecay = 0.990
 
     self.emo_clusters = [ [-1]*mNeurons for x in range(nNeurons)]
     
@@ -49,23 +48,19 @@ class UnsupervisedFacialClassifier:
 
 
       i += 1
-      if not (i % 10):
+      if not (i % 20):
         print "SOM neighbors: %f" % self.som.neighbours
         print "SOM winner err: %f" % self.som.winner_error
 
+    print "%i epochs completed:" % i
 
-    for emotion in Emotion.to_s.keys():
+    for emotion in cluster_identification_images.keys():
       emo_count = zeros((self.som.nNeurons, self.som.mNeurons))
       for img in cluster_identification_images[emotion]:
         self.som.activate(img)
         emo_count[self.som.winner[0]][self.som.winner[1]] += 1
       dominant_node = maximum_position(emo_count)
-      print self.emo_clusters
       self.emo_clusters[dominant_node[0]][dominant_node[1]] = emotion
-      
-      print emo_count
-      print "Emo-Training Error: %f" % (1.0 - (emo_count[dominant_node[0]][dominant_node[1]] / 
-                                    len(cluster_identification_images[emotion])))
 
     print "Final emo-map:"
     print self.emo_clusters
@@ -83,7 +78,7 @@ class UnsupervisedFacialClassifier:
       else:
         print "{^-^} Classified a %s face correctly." % Emotion.to_s[determined_emo]
 
-    print "Error rate on test-set: %f" %(error_count / len(test_faces))
+    print "Error rate on test-set: %f" %(1.0*error_count / len(test_faces))
 
     return False
 
@@ -101,7 +96,7 @@ class UnsupervisedFacialClassifier:
 
 if __name__ == '__main__':
   f = UnsupervisedFacialClassifier(2,2)
-  t = RandomFaceGen.genGaussClusteredInputSet(16)
+  t = RandomFaceGen.genGaussClusteredInputSet(50)
   f.train(t)
 
   #just for kicks

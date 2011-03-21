@@ -1,12 +1,12 @@
 import wx
 from face_sampling_ui import FaceSamplerFrame
 from face_file_parser import FaceFileParser
-from facial_classifier import SupervisedFacialClassifier
-from facial_classifier import Emotion
+from supervised_facial_classifier import SupervisedFacialClassifier
 
 
 ffp = FaceFileParser()
 ffp.add_dir("./inputData")
+#ffp.add_dir("./normData")
 
 datalist = ffp.get_data()
 """
