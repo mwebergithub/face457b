@@ -5,48 +5,6 @@ from scipy import zeros, array
 from custom_kohonen              import KohonenMap
 from classifier_util import Emotion, EPOCHS, IMG_SIZE, RandomFaceGen
 
-"""
-
-
-
-
-
-
-
-
-
-
-
-
-
-   Hello. I have moved the contents of this file into 3:
-   classifier_util.py: Emotion, RandomFaceGen, and EPOCHS, IMG_SIZE
-   unsupervised_facial_classifier.py: for the Kohonen stuff
-   supervised_facial_classifier.py: for the FFN stuff
-
-   Please move any pending work in there. I'd like to delete this file.
-
-   <3 Artem
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-"""
-
-
 class UnsupervisedFacialClassifier:
   som = None
   emo_clusters = []

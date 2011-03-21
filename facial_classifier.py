@@ -14,6 +14,48 @@ from scipy.ndimage import maximum_position
 from scipy import zeros, array 
 from custom_kohonen              import KohonenMap
 
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+   Hello. I have moved the contents of this file into 3:
+   classifier_util.py: Emotion, RandomFaceGen, and EPOCHS, IMG_SIZE
+   unsupervised_facial_classifier.py: for the Kohonen stuff
+   supervised_facial_classifier.py: for the FFN stuff
+
+   Please move any pending work in there. I'd like to delete this file.
+
+   <3 Artem
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""
+
+
 # Most obviously tunable params
 EPOCHS = 200
 IMG_SIZE = 400
