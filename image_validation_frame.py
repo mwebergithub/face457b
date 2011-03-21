@@ -6,7 +6,7 @@ class ImageValidationFrame(wx.Frame):
         ffp = FaceFileParser()
         ffp.add_dir(dir)
         data_imgs = ffp.get_data()
-        wx.Frame.__init__(self,parent,title=title,size=(300,650))
+        wx.Frame.__init__(self,parent,title=title,size=(800,650))
         
         self.imgs = [[],[],[],[]]
         self.images = [[], [], [], []]
@@ -19,8 +19,9 @@ class ImageValidationFrame(wx.Frame):
             
         for a in range(0,4):
             for b in range(0,len(self.images[a])):
-                i = self.images[a][b].ConvertToBitmap()
-                wx.StaticBitmap(self,-1,i,(5 + (70 * a), 5 + (30 * b)))
+                i = self.images[a][b].Scale(180,36)
+                i = i.ConvertToBitmap()
+                wx.StaticBitmap(self,-1,i,(5 + (190 * a), 5 + (46 * b)))
             
         #i = self.images[0].Scale(240,80,wx.IMAGE_QUALITY_NORMAL)
         #self.show_img = wx.StaticBitmap(self,-1,i.ConvertToBitmap(),(5,5))
@@ -41,14 +42,14 @@ class ImageValidationFrame(wx.Frame):
         ret_images = []
         
         for img in src_data:
-            i = wx.EmptyBitmap(width=60,height=20).ConvertToImage()
+            i = wx.EmptyBitmap(width=60,height=12).ConvertToImage()
             data = list(img[1])
             l_e = data[:50]
             r_e = data[50:100]
             mo = data[100:]
             #Create the typestrip which tells us the class of the face
             for x in range(0,2):
-                for y in range(0,20):
+                for y in range(0,12):
                     if img[0] == 0:
                         i.SetRGB(x,y,0,0,0)
                     elif img[0] == 1:
@@ -59,17 +60,17 @@ class ImageValidationFrame(wx.Frame):
                         i.SetRGB(x,y,0,0,255)
             ct = 0
             for x in range(5,10):
-                for y in range(5,15):
+                for y in range(1,11):
                     i.SetRGB(x,y,l_e[ct],l_e[ct],l_e[ct])
                     ct += 1
             ct = 0
             for x in range(15,20):
-                for y in range(5,15):
+                for y in range(1,11):
                     i.SetRGB(x,y,r_e[ct],r_e[ct],r_e[ct])
                     ct += 1
             ct = 0
             for x in range(25,55):
-                for y in range(5,15):
+                for y in range(1,11):
                     i.SetRGB(x,y,mo[ct],mo[ct],mo[ct])
                     ct += 1
             ret_images.append(i)
