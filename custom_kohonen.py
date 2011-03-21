@@ -41,6 +41,8 @@ class KohonenMap(Module):
         self.neighbourdist = min(nNeurons, mNeurons)
         self.learningrate = 0.01
         self.neighbourdecay = 0.9999
+        #XXX HACK
+        self.winner_error = 100
 
         # distance matrix
         distx, disty = mgrid[0:self.nNeurons, 0:self.mNeurons]
@@ -56,6 +58,8 @@ class KohonenMap(Module):
         self.difference = self.neurons - tile(inbuf, (self.nNeurons, self.mNeurons, 1))
         error = sum(self.difference ** 2, 2)
         self.winner = array(minimum_position(error))
+        #XXX HACK
+        self.winner_error = error[self.winner[0]][self.winner[1]]
         if not self.outputFullMap:
             outbuf[:] = self.winner
 

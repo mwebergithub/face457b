@@ -196,8 +196,9 @@ class SupervisedFacialClassifier:
 if __name__ == '__main__':
 
   f = SupervisedFacialClassifier()
-  t = RandomFaceGen.genRandomInputSet(50)
+  t = RandomFaceGen.genGaussClusteredInputSet(50)
   f.train(t)
-  for i in xrange(10):
-    img = RandomFaceGen.genRandomImg()
-    f.classify(img)
+
+  #just for kicks
+  img = RandomFaceGen.genRandomImg()
+  f.classify(img)

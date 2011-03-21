@@ -51,6 +51,7 @@ class UnsupervisedFacialClassifier:
       i += 1
       if not (i % 10):
         print "SOM neighbors: %f" % self.som.neighbours
+        print "SOM winner err: %f" % self.som.winner_error
 
 
     for emotion in Emotion.to_s.keys():
@@ -100,8 +101,9 @@ class UnsupervisedFacialClassifier:
 
 if __name__ == '__main__':
   f = UnsupervisedFacialClassifier(2,2)
-  t = RandomFaceGen.genRandomInputSet(50)
+  t = RandomFaceGen.genGaussClusteredInputSet(16)
   f.train(t)
-  for i in xrange(10):
-    img = RandomFaceGen.genRandomImg()
-    f.classify(img)
+
+  #just for kicks
+  img = RandomFaceGen.genRandomImg()
+  f.classify(img)
