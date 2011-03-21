@@ -23,7 +23,7 @@ class Emotion:
 
   }
   
-class FacialClassifier:
+class SupervisedFacialClassifier:
 
   fnn = None;
 
@@ -99,6 +99,10 @@ class FacialClassifier:
     else:
       trainer.trainEpochs(EPOCHS)
 
+class UnsupervisedFacialClassifier:
+
+
+class RandomFaceGen:
   @classmethod
   def genRandomImg(cls):
       img = []
@@ -114,9 +118,3 @@ class FacialClassifier:
       inputData.append((emo, tuple(cls.genRandomImg())))
 
     return inputData
-
-      
-
-    
-
-
