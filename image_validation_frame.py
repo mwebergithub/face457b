@@ -5,22 +5,37 @@ class ImageValidationFrame(wx.Frame):
     def __init__(self,parent,title,dir):
         ffp = FaceFileParser()
         ffp.add_dir(dir)
-        imgs = ffp.get_data()
-        wx.Frame.__init__(self,parent,title=title,size=(300,200))
-        self.images = self.make_images(imgs)
-        i = self.images[0].Scale(240,80,wx.IMAGE_QUALITY_NORMAL)
-        self.show_img = wx.StaticBitmap(self,-1,i.ConvertToBitmap(),(5,5))
-        self.img_c = 0
-        self.next_b = wx.Button(self,label='Next',pos=(5,90))
-        self.Bind(wx.EVT_BUTTON,self.next_img,self.next_b)
+        data_imgs = ffp.get_data()
+        wx.Frame.__init__(self,parent,title=title,size=(300,650))
+        
+        self.imgs = [[],[],[],[]]
+        self.images = [[], [], [], []]
+        
+        for img in data_imgs:
+            self.imgs[img[0]].append(img)
+        
+        for a in range(0,4):
+            self.images[a] = self.make_images(self.imgs[a])
+            
+        for a in range(0,4):
+            for b in range(0,len(self.images[a])):
+                i = self.images[a][b].ConvertToBitmap()
+                wx.StaticBitmap(self,-1,i,(5 + (70 * a), 5 + (30 * b)))
+            
+        #i = self.images[0].Scale(240,80,wx.IMAGE_QUALITY_NORMAL)
+        #self.show_img = wx.StaticBitmap(self,-1,i.ConvertToBitmap(),(5,5))
+        #self.img_c = 0
+        #self.next_b = wx.Button(self,label='Next',pos=(5,90))
+        #self.Bind(wx.EVT_BUTTON,self.next_img,self.next_b)
+        
         self.Show()
         
-    def next_img(self,event):
-        self.img_c += 1
-        self.img_c = self.img_c % len(self.images)
-        i = self.images[self.img_c].Scale(240,80,wx.IMAGE_QUALITY_NORMAL)
-        self.show_img = wx.StaticBitmap(self,-1,i.ConvertToBitmap(),(5,5))
-        self.Refresh()
+    #def next_img(self,event):
+    #    self.img_c += 1
+    #    self.img_c = self.img_c % len(self.images)
+    #    i = self.images[self.img_c].Scale(240,80,wx.IMAGE_QUALITY_NORMAL)
+    #    self.show_img = wx.StaticBitmap(self,-1,i.ConvertToBitmap(),(5,5))
+    #    self.Refresh()
         
     def make_images(self,src_data):
         ret_images = []
