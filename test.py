@@ -1,0 +1,41 @@
+import wx
+from face_sampling_ui import FaceSamplerFrame
+from face_file_parser import FaceFileParser
+from facial_classifier import FacialClassifier
+from facial_classifier import Emotion
+
+
+ffp = FaceFileParser()
+ffp.add_dir("c:\\face457b\\inputData")
+
+datalist = ffp.get_data()
+"""
+print "Single Hidden Layer"
+for i in range(2,20):
+    fc = FacialClassifier()
+    fc.alternateTrain(datalist, [(i)], 25)
+
+print "Double Hidden Layer"
+for i in range(2,20):
+    fc = FacialClassifier()
+    fc.alternateTrain(datalist, (i,i), 25)
+
+print "Triple Hidden Layer"
+for i in range(2,20):
+    fc = FacialClassifier()
+    fc.alternateTrain(datalist, (i,i,i), 25)
+"""
+fc = FacialClassifier()
+# alternateTrain(datalist, hiddenNodes, #epochs, log stats every X epochs)
+fc.alternateTrain(datalist, (20,20), 500, 10);
+
+"""
+#Test a single input file
+ffp2 = FaceFileParser()
+ffp2.add_file("c:\\face457b\\inputData\\in01.csv")
+
+datalist2 = ffp2.get_data()
+
+emo,data = datalist2[0]
+fc.classify(data)
+"""
