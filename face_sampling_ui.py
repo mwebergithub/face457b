@@ -1,6 +1,9 @@
 import wx
 import os
 from face_sampling import face_sampler
+from face_file_parser import FaceFileParser
+from facial_classifier import FacialClassifier
+from facial_classifier import Emotion
 
 """
 class FaceStaticBitmap(wx.StaticBitmap):
@@ -72,7 +75,7 @@ class FacePanel(wx.Panel):
     
 class FaceSamplerFrame(wx.Frame):
     def __init__(self,parent, title):
-        wx.Frame.__init__(self, parent, title=title, size=wx.Size(665, 600))
+        wx.Frame.__init__(self, parent, title=title, size=wx.Size(665, 620))
         self.img_panel = FacePanel(self,pos=(5,5),size=(640,480))
         self.state = 0
         self.l_eye_coords = None
@@ -91,11 +94,15 @@ class FaceSamplerFrame(wx.Frame):
         self.f_name_tb = wx.TextCtrl(self,pos=(5,520),size=(235,23))
         self.save_as_b = wx.Button(self,label='Save Data As',pos=(245,520))
         
+        self.train_f_name_tb = wx.TextCtrl(self,pos=(5,550),size=(235,23),)
+        self.train_b = wx.Button(self,label='Train and Test',pos=(245,550))
+
         self.Bind(wx.EVT_BUTTON,self.select_new_image,self.new_b)
         self.Bind(wx.EVT_BUTTON,self.l_eye_evt,self.l_eye_b)
         self.Bind(wx.EVT_BUTTON,self.r_eye_evt,self.r_eye_b)
         self.Bind(wx.EVT_BUTTON,self.mouth_evt,self.mouth_b)
         self.Bind(wx.EVT_BUTTON,self.save_as,self.save_as_b)
+        self.Bind(wx.EVT_BUTTON,self.train,self.train_b)
         
         self.Show()
     
@@ -147,3 +154,11 @@ class FaceSamplerFrame(wx.Frame):
         self.bmp_img = wx.BitmapFromImage(img)
         self.st_bmp = wx.FaceStaticBitmap(self,-1,self.bmp_img,pos=(5,5),size=(640,480))
         self.Refresh()
+
+    def train(self, event):
+        if self.train_f_name_tb.GetValue() != '':
+            ffp = FaceFileParser()
+            ffp.add_dir(self.train_f_name_tb.GetValue())
+            datalist = ffp.get_data()
+            fc = FacialClassifier()
+            fc.alternateTrain(datalist, (20,20), 100, 5)
