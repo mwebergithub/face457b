@@ -1,12 +1,12 @@
 import wx
 from face_sampling_ui import FaceSamplerFrame
 from face_file_parser import FaceFileParser
-from facial_classifier import FacialClassifier
+from facial_classifier import SupervisedFacialClassifier
 from facial_classifier import Emotion
 
 
 ffp = FaceFileParser()
-ffp.add_dir("c:\\face457b\\inputData")
+ffp.add_dir("./inputData")
 
 datalist = ffp.get_data()
 """
@@ -25,7 +25,7 @@ for i in range(2,20):
     fc = FacialClassifier()
     fc.alternateTrain(datalist, (i,i,i), 25)
 """
-fc = FacialClassifier()
+fc = SupervisedFacialClassifier()
 # alternateTrain(datalist, hiddenNodes, #epochs, log stats every X epochs)
 fc.alternateTrain(datalist, (20,20), 500, 10);
 

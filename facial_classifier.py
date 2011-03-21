@@ -208,6 +208,12 @@ class SupervisedFacialClassifier:
 
 
 class UnsupervisedFacialClassifier:
+  def train(self, inputData, verbose=True):
+    return False
+
+  def classify(self, facialData ):
+    return False
+
 
 
 class RandomFaceGen:

@@ -2,7 +2,7 @@ import wx
 import os
 from face_sampling import face_sampler
 from face_file_parser import FaceFileParser
-from facial_classifier import FacialClassifier
+from facial_classifier import SupervisedFacialClassifier
 from facial_classifier import Emotion
 
 """
@@ -160,5 +160,5 @@ class FaceSamplerFrame(wx.Frame):
             ffp = FaceFileParser()
             ffp.add_dir(self.train_f_name_tb.GetValue())
             datalist = ffp.get_data()
-            fc = FacialClassifier()
+            fc = SupervisedFacialClassifier()
             fc.alternateTrain(datalist, (20,20), 100, 5)
