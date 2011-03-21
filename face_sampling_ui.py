@@ -2,8 +2,7 @@ import wx
 import os
 from face_sampling import face_sampler
 from face_file_parser import FaceFileParser
-from facial_classifier import SupervisedFacialClassifier
-from facial_classifier import Emotion
+from supervised_facial_classifier import SupervisedFacialClassifier
 
 """
 class FaceStaticBitmap(wx.StaticBitmap):
