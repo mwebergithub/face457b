@@ -28,9 +28,9 @@ class RandomFaceGen:
       return img
 
   @classmethod
-  def genRandomInputSet(cls):
+  def genRandomInputSet(cls, size=10):
     inputData = []
-    for i in range(20):
+    for i in range(size):
       emo = int(random()*4)
       inputData.append((emo, tuple(cls.genRandomImg())))
 

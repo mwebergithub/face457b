@@ -196,7 +196,7 @@ class SupervisedFacialClassifier:
 if __name__ == '__main__':
 
   f = SupervisedFacialClassifier()
-  t = RandomFaceGen.genRandomInputSet()
+  t = RandomFaceGen.genRandomInputSet(50)
   f.train(t)
   for i in xrange(10):
     img = RandomFaceGen.genRandomImg()

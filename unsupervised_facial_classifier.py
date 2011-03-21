@@ -96,11 +96,12 @@ class UnsupervisedFacialClassifier:
     return emotion
 
 
-#################### TEST
+########## SMOKE TEST
 
-f = UnsupervisedFacialClassifier(2,2)
-t = RandomFaceGen.genRandomInputSet()
-f.train(t)
-for i in xrange(10):
-  img = RandomFaceGen.genRandomImg()
-  f.classify(img)
+if __name__ == '__main__':
+  f = UnsupervisedFacialClassifier(2,2)
+  t = RandomFaceGen.genRandomInputSet(50)
+  f.train(t)
+  for i in xrange(10):
+    img = RandomFaceGen.genRandomImg()
+    f.classify(img)
