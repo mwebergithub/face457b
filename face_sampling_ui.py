@@ -3,6 +3,7 @@ import os
 from face_sampling import face_sampler
 from face_file_parser import FaceFileParser
 from supervised_facial_classifier import SupervisedFacialClassifier
+from unsupervised_facial_classifier import UnsupervisedFacialClassifier
 
 """
 class FaceStaticBitmap(wx.StaticBitmap):
@@ -74,7 +75,7 @@ class FacePanel(wx.Panel):
     
 class FaceSamplerFrame(wx.Frame):
     def __init__(self,parent, title):
-        wx.Frame.__init__(self, parent, title=title, size=wx.Size(665, 620))
+        wx.Frame.__init__(self, parent, title=title, size=wx.Size(665, 630))
         self.img_panel = FacePanel(self,pos=(5,5),size=(640,480))
         self.state = 0
         self.l_eye_coords = None
@@ -92,10 +93,20 @@ class FaceSamplerFrame(wx.Frame):
         
         self.f_name_tb = wx.TextCtrl(self,pos=(5,520),size=(235,23))
         self.save_as_b = wx.Button(self,label='Save Data As',pos=(245,520))
-        
-        self.train_f_name_tb = wx.TextCtrl(self,pos=(5,550),size=(235,23),)
-        self.train_b = wx.Button(self,label='Train and Test',pos=(245,550))
 
+        
+        self.train_f_name_tb = wx.TextCtrl(self,pos=(5,560),size=(235,23),)
+        self.train_b = wx.Button(self,label='Train and Test',pos=(245,560))
+
+        #self.train_numNodes_l = wx.StaticText(self,pos=(405,560),size=(40,23), label='stuff',)
+        self.train_numNodes_l = wx.StaticText(self, -1, 'Nodes:' , wx.Point(405, 565))
+        self.train_numLayers_l = wx.StaticText(self, -1, 'Layers:' , wx.Point(475, 565))
+        self.train_numEpochs_l = wx.StaticText(self, -1, 'Epochs:' , wx.Point(545, 565))
+        
+        self.train_numNodes_tb = wx.TextCtrl(self,pos=(445,560),size=(25,23),)
+        self.train_numLayers_tb = wx.TextCtrl(self,pos=(515,560),size=(20,23),)
+        self.train_numEpochs_tb = wx.TextCtrl(self,pos=(585,560),size=(30,23),)
+             
         self.Bind(wx.EVT_BUTTON,self.select_new_image,self.new_b)
         self.Bind(wx.EVT_BUTTON,self.l_eye_evt,self.l_eye_b)
         self.Bind(wx.EVT_BUTTON,self.r_eye_evt,self.r_eye_b)
@@ -160,4 +171,18 @@ class FaceSamplerFrame(wx.Frame):
             ffp.add_dir(self.train_f_name_tb.GetValue())
             datalist = ffp.get_data()
             fc = SupervisedFacialClassifier()
-            fc.alternateTrain(datalist, (20,20), 100, 5)
+
+            layers = int(self.train_numLayers_tb.GetValue())
+            nodes = int(self.train_numNodes_tb.GetValue())
+            epochs = int(self.train_numEpochs_tb.GetValue())
+
+            print layers
+            print nodes
+            print epochs
+
+            if layers == 1:
+                fc.alternateTrain(datalist, [(nodes)], epochs, 5)
+            elif layers == 2:
+                fc.alternateTrain(datalist, (nodes,nodes), epochs, 5)
+            elif layers == 3:
+                fc.alternateTrain(datalist, (nodes,nodesnodes), epochs, 5)
