@@ -15,6 +15,7 @@ from classifier_util import Emotion, EPOCHS, IMG_SIZE, RandomFaceGen
 class SupervisedFacialClassifier:
 
   fnn = None;
+  errorData = []
 
   """
   classify(facialData) returns an int [0..3] from the Emotion class
@@ -110,8 +111,6 @@ class SupervisedFacialClassifier:
     logFreq is the frequency of epochs to output error data
    """
   def alternateTrain(self, inputData, hiddenLayers, numEpochs, logFreq=1, verbose=True):
-
-
     # Set of data to classify:
     # - IMG_SIZE input dimensions per data point
     # - 1 dimensional output
@@ -140,9 +139,17 @@ class SupervisedFacialClassifier:
       weightdecay=0.01
     ) 
 
+    self.errorData = {}
+    self.epochData = []
+    self.trainErr = []
+    self.testErr = []
+
+    self.avgTrnErr = 0
+    self.avgTstErr = 0
+
     # Train this bitch. 
     if verbose:
-      print "Epoch\tTrain Error\tTest Error\t%d Nodes" % hiddenLayers[0]
+      # print "Epoch\tTrain Error\tTest Error\t%d Nodes" % hiddenLayers[0]
       # Report after every epoch if verbose
       for i in range(numEpochs):
         trainer.trainEpochs(1)
@@ -153,18 +160,37 @@ class SupervisedFacialClassifier:
           tstresult = percentError( trainer.testOnClassData(
                  dataset=test_faces ), test_faces['class'] )
 
-          print "%4d\t" % trainer.totalepochs, \
+          self.avgTrnErr += trnresult;
+          self.avgTstErr += tstresult;
+          
+          self.epochData.append(trainer.totalepochs)
+          self.trainErr.append(trnresult)
+          self.testErr.append(tstresult)
+
+          """print "%4d\t" % trainer.totalepochs, \
                  "%5.2f%%\t\t" % trnresult, \
                  "%5.2f%%" % tstresult
+          """
     else:
       trainer.trainEpochs(EPOCHS)
+
+    self.errorData['epochs']=self.epochData
+    self.errorData['training_error']=self.trainErr
+    self.errorData['testing_error']=self.testErr
+    self.errorData['avg_testing_error']=self.avgTstErr / numEpochs
+    self.errorData['avg_training_error']=self.avgTrnErr / numEpochs
+
+    return self.errorData
+    #TODO:
+    #Keep a dictionary of all of the error values returned.. also return the overall average error.
 
   """
   Builds a ff network with various numbers of hiddenLayer/nodes
   """
   @classmethod
   def buildCustomNetwork(self, hiddenLayers, train_faces):
-      myfnn = None
+      myfnn = None     
+      print "building network..."
       if len(hiddenLayers) == 1:
           myfnn = buildNetwork( 
             train_faces.indim, 
