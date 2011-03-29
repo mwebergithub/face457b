@@ -5,11 +5,13 @@ class face_sampler:
     def __init__(self):
         self.eye_p_count = 50
         self.mouth_p_count = 400 - 2*self.eye_p_count
+        self.mouth_st_d = 6.0
+        self.eye_st_d = 2.0
 
-    def sample_pixels(self,top_x,top_y,width,height,num_nodes):
-        stdev_w = float(width) / 6.0
+    def sample_pixels(self,top_x,top_y,width,height,num_nodes,st_d):
+        stdev_w = float(width) / st_d
         mean_w = float(width) / 2.0
-        stdev_h = float(height) / 6.0
+        stdev_h = float(height) / st_d
         mean_h = float(height) / 2.0
         ret_nodes = []
         while len(ret_nodes) < num_nodes:
@@ -22,9 +24,9 @@ class face_sampler:
         
     #left_eye, right_eye and mouth are 4-tuples of (x,y,width,height)
     def gen_pixel_set(self,pic,left_eye,right_eye,mouth):
-        l_eye_p = self.sample_pixels(left_eye[0],left_eye[1],left_eye[2],left_eye[3],self.eye_p_count)
-        r_eye_p = self.sample_pixels(right_eye[0],right_eye[1],right_eye[2],right_eye[3],self.eye_p_count)
-        mouth_p = self.sample_pixels(mouth[0],mouth[1],mouth[2],mouth[3],self.mouth_p_count)
+        l_eye_p = self.sample_pixels(left_eye[0],left_eye[1],left_eye[2],left_eye[3],self.eye_p_count,self.eye_st_d)
+        r_eye_p = self.sample_pixels(right_eye[0],right_eye[1],right_eye[2],right_eye[3],self.eye_p_count,self.eye_st_d)
+        mouth_p = self.sample_pixels(mouth[0],mouth[1],mouth[2],mouth[3],self.mouth_p_count,self.mouth_st_d)
         pic.ConvertToGreyscale()
         px_set = []
         for px in l_eye_p:

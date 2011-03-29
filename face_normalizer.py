@@ -52,8 +52,8 @@ class FaceNormalizer:
                 for k in range(0,eye_c):
                     f.write('1,' + str(self.norm_data[j][i][k]) + '\n')
                 for k in range(eye_c,2*eye_c):
-                    f.write('1,' + str(self.norm_data[j][i][k]) + '\n')
+                    f.write('2,' + str(self.norm_data[j][i][k]) + '\n')
                 for k in range(2*eye_c,total_c):
-                    f.write('1,' + str(self.norm_data[j][i][k]) + '\n')
+                    f.write('3,' + str(self.norm_data[j][i][k]) + '\n')
                 f.write(str(j))
                 f.close()

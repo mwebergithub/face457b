@@ -81,6 +81,7 @@ class FaceSamplerFrame(wx.Frame):
         self.l_eye_coords = None
         self.r_eye_coords = None
         self.mouth_coords = None
+        self.img_file = ''
         #self.refresh_img()
         
         self.typelist = ['Sad', 'Smiling', 'Calm', 'Astonished']
@@ -124,7 +125,20 @@ class FaceSamplerFrame(wx.Frame):
                 erwr.ShowModal()
                 erwr.Destroy()
                 return
-
+            #write an entry to the replay log
+            replay_file = open('./replay.txt','a')
+            replay_file.write(self.img_file + '\n')
+            replay_file.write('1,' + str(sets[1][0][0])+','+str(sets[1][0][1])+','+
+            str(sets[1][1][0]-sets[1][0][0])+','+str(sets[1][1][1]-sets[1][0][1])+'\n')
+            replay_file.write('2,' + str(sets[2][0][0])+','+str(sets[2][0][1])+','+
+            str(sets[2][1][0]-sets[2][0][0])+','+str(sets[2][1][1]-sets[2][0][1])+'\n')
+            replay_file.write('3,' + str(sets[3][0][0])+','+str(sets[3][0][1])+','+
+            str(sets[3][1][0]-sets[3][0][0])+','+str(sets[3][1][1]-sets[3][0][1])+'\n')
+            replay_file.write(str(self.typebox.GetSelection()) + '\n')
+            replay_file.write(self.f_name_tb.GetValue() + '\n')
+            replay_file.close()
+            
+            
             f_s = face_sampler()
             left_eye_range = (sets[1][0][0],sets[1][0][1],sets[1][1][0]-sets[1][0][0],sets[1][1][1]-sets[1][0][1])
             right_eye_range = (sets[2][0][0],sets[2][0][1],sets[2][1][0]-sets[2][0][0],sets[2][1][1]-sets[2][0][1])
@@ -154,8 +168,9 @@ class FaceSamplerFrame(wx.Frame):
             self.filename = dlg.GetFilename()
             self.dirname = dlg.GetDirectory()
             self.img = wx.Image(os.path.join(self.dirname,self.filename))
-            self.img = self.img.Scale(640,480,wx.IMAGE_QUALITY_NORMAL)
+            self.img = self.img.Scale(640,480,wx.IMAGE_QUALITY_HIGH)
             #self.refresh_img()
+            self.img_file = os.path.join(self.dirname,self.filename)
             self.img_panel.set_bitmap(wx.BitmapFromImage(self.img))
         dlg.Destroy()
 
