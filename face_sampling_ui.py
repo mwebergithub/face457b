@@ -208,6 +208,12 @@ class FaceSamplerFrame(wx.Frame):
                 elif layers == 3:
                     errorData = fc.alternateTrain(datalist, (nodes,nodes,nodes), epochs, 5)
 
+                print 'ErrorData:\n'
+                
+                print errorData
+                    
+                print '\n'
+                
                 for entry in errorData['training_error']:
                     print entry
             else:
