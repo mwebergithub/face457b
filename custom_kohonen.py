@@ -1,4 +1,4 @@
-__author__ = 'Thomas Rueckstiess, ruecksti@in.tum.de'
+__author__ = 'Thomas Rueckstiess, ruecksti@in.tum.de, Artem Avdacev, aavdacev@uwaterloo.ca'
 
 from scipy import random
 from scipy.ndimage import minimum_position
@@ -41,7 +41,7 @@ class KohonenMap(Module):
         self.mNeurons = mNeurons
         self.neighbours = min(nNeurons, mNeurons)
         self.neighbourdist = min(nNeurons, mNeurons)
-        self.learningrate = 0.01
+        self.learningrate = 0.001
         self.neighbourdecay = 0.9999
         self.winner_error = maxint
 

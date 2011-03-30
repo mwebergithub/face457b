@@ -2,8 +2,9 @@ import dircache
 import os.path
 
 class FaceFileParser:
-    def __init__(self):
+    def __init__(self, verbose=True):
         self.dat_list = []
+        self.verbose = verbose
     
     def add_file(self,file):
         f = open(file,'r')
@@ -17,7 +18,8 @@ class FaceFileParser:
                 emt = int(f_l)
                 break
         f.close()
-        print 'Done with ' + file
+        if self.verbose:
+          print 'Done with ' + file
         self.dat_list.append((emt,tuple(vals)))
         
     def add_files(self,files):
@@ -35,4 +37,7 @@ class FaceFileParser:
                 files.append(os.path.join(dir,f))
                 
         self.add_files(files)
+
+    def reset_data(self):
+       self.dat_list = []
         
