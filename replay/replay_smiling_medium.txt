@@ -4,7 +4,6 @@ C:\face457b\photos\smiling\P3301331.JPG
 3,219,298,162,55
 1
 c:\face457b\data1\71.csv
-
 C:\face457b\photos\smiling\P3301337.JPG
 1,213,160,59,32
 2,313,158,68,31
