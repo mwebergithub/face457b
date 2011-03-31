@@ -36,7 +36,7 @@ p = pylab.plot(som.neurons[:,:,0].flatten(), som.neurons[:,:,1].flatten(), 's')
 pylab.axis([-15,15,-15,15])
 
 i = 0
-for j in range(20):
+for j in range(40):
   print j
   for data in cluster_data:
       i += 1

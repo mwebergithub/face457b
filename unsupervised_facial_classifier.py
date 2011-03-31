@@ -43,8 +43,8 @@ class UnsupervisedFacialClassifier:
         test_faces.append(entry)
 
     i = 0
-    # Should the number of epochs be consistent with supervised?
-    while (self.som.neighbours > 0.5 or i < epochs):
+    #while (self.som.neighbours > 0.5 or i < epochs):
+    while (i < epochs):
       for img in train_faces:
         # Not sure if this can be done with som.activateOnDataset()
         self.som.activate(img)
