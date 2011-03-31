@@ -15,7 +15,7 @@ outfile_name = "%s.csv" % sys.argv[3] # Append .csv extension for excel
 
 # Write the trial data out to a file
 outfile = open(outfile_name, 'w')
-outfile.write("DIRNAME, TESTING_ERR, TESTING_ERR_STD, TRAINING_ERR, TRAINING_ERR_STD\n")
+outfile.write("DIRNAME, TRAINING_ERR, TRAINING_ERR_STD, TESTING_ERR, TESTING_ERR_STD\n")
 
 # For all leaf-node directories under the specified path we run trials
 for data_dir in os.walk(root_data_dir):
@@ -47,7 +47,7 @@ for data_dir in os.walk(root_data_dir):
     print "\nSummary for %s:" %dirname
 
     overall_training_error = numpy.mean(trial_avg_training_err)
-    overall_training_error_std = numpy.std(trial_avg_testing_err)
+    overall_training_error_std = numpy.std(trial_avg_training_err)
 
     overall_testing_error = numpy.mean(trial_avg_testing_err)
     overall_testing_error_std = numpy.std(trial_avg_testing_err)
